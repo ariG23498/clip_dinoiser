@@ -121,7 +121,8 @@ class MaskClipHead(nn.Module):
         return aug_embeddings.squeeze(1)
 
     def load_visual_projs(self):
-        loaded = torch.load(self.visual_projs_path, map_location='cuda')
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        loaded = torch.load(self.visual_projs_path, map_location=device)
         attrs = ['proj']
         for attr in attrs:
             current_attr = getattr(self, attr)
